@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/ButtonSpin.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/ReelScript.cs">
     <Files>
-      <File FileName="Assets/scripts/ButtonSpin.cs" Line="22" Column="1" />
-      <File FileName="Assets/scripts/ButtonSpin.cs" Line="19" Column="42" />
-      <File FileName="../../GitHub/unity_experiments/BingoCardProjects/BingoCard_JimC/Assets/Scripts/buttons/PlayButton.cs" Line="1" Column="1" />
+      <File FileName="Assets/scripts/ButtonSpin.cs" Line="19" Column="31" />
+      <File FileName="Assets/scripts/GameController.cs" Line="31" Column="22" />
+      <File FileName="Assets/scripts/ReelScript.cs" Line="6" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

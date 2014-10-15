@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ButtonSpin : MonoBehaviour {
-
+	public GameObject M_GameController;
 	// Use this for initialization
 	void Start () {
 	
@@ -14,9 +14,10 @@ public class ButtonSpin : MonoBehaviour {
 	}
 
 	void OnMouseDown ()
-	{		
-		Debug.Log("   SPIN");
-		//transform.Rotate (Vector3.forward * -10);
-		iTween.RotateAdd (gameObject, iTween.Hash("z", -30, "time", 1)); 
+	{	
+		//Spin button 45 degrees.
+		iTween.RotateAdd (gameObject, iTween.Hash("z", -45, "time", 1));
+		//Tell gameController we hit spin.
+		M_GameController.GetComponent<GameController> ().spinButtonHit ();
 	}
 }
