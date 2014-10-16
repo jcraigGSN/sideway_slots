@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour {
 	private serverScript mServerScript;
 	private List<List<string>> mResult;
 	private spinResult mSpinResult;
+	public GameObject mSymbolHighlight;
+	private List<GameObject> mWinHighlights;
 
 	void Awake () {
 		banker = BankerObject.GetComponent<bankerScript> ();
@@ -29,6 +31,7 @@ public class GameController : MonoBehaviour {
 		textBet = TextField_Bet.GetComponent<TextFieldScript> ();
 		textWin = TextField_Win.GetComponent<TextFieldScript> ();
 		mServerScript = ServerObject.GetComponent<serverScript> ();
+		mWinHighlights = new List<GameObject> ();
 	}
 	// Use this for initialization
 	void Start () {
@@ -43,6 +46,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spinButtonHit() {
+		clearHighlights ();
 		//Deduct bet on display.
 		int tempBal = banker.GetBalance () - banker.GetBetAmt ();
 		textBalance.setValue (tempBal);
@@ -104,7 +108,10 @@ public class GameController : MonoBehaviour {
 		//Increment balance.
 		banker.IncBalance (win);
 		textBalance.setValue (banker.GetBalance ());
-		Debug.Log ("win = " + win);
+		//Cycle wins.
+		if (mSpinResult.GetHighlights().Count > 0) {
+			CycleWins (mSpinResult);
+		}
 	}
 
 	protected void setBetAmt() {
@@ -122,5 +129,33 @@ public class GameController : MonoBehaviour {
 	public void onBetDecrease() {
 		banker.DecBetAmt ();
 		setBetAmt ();
+	}
+
+	protected void CycleWins(spinResult inSpinResult) {
+		//Get first award
+		List<outcomeObj> mOutcomeObj = inSpinResult.GetHighlights ();
+		List<List<int>> mHighlights = mOutcomeObj[0].GetHighlights ();
+
+		for(int i=0; i <3; ++i) {
+			for(int j = 0; j < 3; ++j) {
+				Debug.Log ("check " + i + "," + j);
+				if (mHighlights[i][j] == 1) {
+					//Add highlight   
+					GameObject reelTemp = GameObject.Find("Reel_" + (i+1)) as GameObject;
+					float posX = reelTemp.transform.localPosition.x - ((j-1 )*2);
+					float posY = reelTemp.transform.localPosition.y;
+					Debug.Log ("   highlight " + i + "," + j + ", xy = " + posX + "," + posY);
+					GameObject highlightSymbol = GameObject.Instantiate(mSymbolHighlight, new Vector3 (posX, posY, -4), Quaternion.identity) as GameObject;
+					mWinHighlights.Add(highlightSymbol);
+				}
+			}
+		}
+	}
+
+	protected void clearHighlights() {
+		foreach (GameObject obj in mWinHighlights) {
+			GameObject.DestroyObject (obj);
+		}
+		mWinHighlights = new List<GameObject> ();
 	}
 }

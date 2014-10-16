@@ -36,7 +36,7 @@ public class ReelScript : MonoBehaviour {
 	}
 
 	public void OnStopReel (List<string> Result) {
-		Debug.Log (" reelSymbols " + Result[0] + "," + Result[1] + "," + Result[2]);
+//		Debug.Log (" reelSymbols " + Result[0] + "," + Result[1] + "," + Result[2]);
 		//Stop tweens in this object only.
 		iTween.Stop (gameObject);
 		float stopX = 2 * 0.091f;

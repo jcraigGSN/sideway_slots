@@ -504,6 +504,7 @@ MonoBehaviour:
   TextField_Win: {fileID: 245342036}
   BankerObject: {fileID: 193182376}
   ServerObject: {fileID: 1760338210}
+  mSymbolHighlight: {fileID: 100000, guid: 6869112c14018470ba4c2d54747ee7c7, type: 2}
 --- !u!4 &951962252
 Transform:
   m_ObjectHideFlags: 0
