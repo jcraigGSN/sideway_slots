@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour {
 		//Deduct bet on display.
 		int tempBal = banker.GetBalance () - banker.GetBetAmt ();
 		textBalance.setValue (tempBal);
+		//Clear win amount
+		textWin.setValue (0);
 
 		//Tell reels to spin.
 		Reel_1.GetComponent<ReelScript> ().OnSpin ();
@@ -58,7 +60,7 @@ public class GameController : MonoBehaviour {
 		StartCoroutine (OnReelsStopped ());
 
 		//Get outcome.
-		mSpinResult = mServerScript.Spin (banker.GetBetAmt () / 5);
+		mSpinResult = mServerScript.Spin (banker.GetBetAmt ());
 		mResult = mSpinResult.GetResult ();  //Get symbols on reels.
 	}
 
@@ -107,6 +109,8 @@ public class GameController : MonoBehaviour {
 
 	protected void setBetAmt() {
 		textBet.setValue (banker.GetBetAmt ());
+		//Clear win amount
+		textWin.setValue (0);
 	}
 	/**
 	 * Incereases bet amount. Called from ButtonBetPlus.
