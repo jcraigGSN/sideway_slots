@@ -7,6 +7,9 @@ public class ReelScript : MonoBehaviour {
 	private Vector2 currentOffset;
 	private GameObject spawnedSymbol1, spawnedSymbol2, spawnedSymbol3;
 
+	public AudioClip soundReelSpin;
+	public AudioClip soundReelStop;
+
 	public GameObject[] symbols = new GameObject[6];
 
 	// Use this for initialization
@@ -29,7 +32,7 @@ public class ReelScript : MonoBehaviour {
 			DestroyObject (spawnedSymbol3);
 
 		reelLoop ();
-//		iTween.ValueTo (gameObject, iTween.Hash ("from", 0.0f, "to", 1, "time", 0.8f, "onupdate", "OnTweenUpdate", "oncomplete", "reelLoop"));
+		audio.PlayOneShot (soundReelSpin);
 	}
 
 	protected void reelLoop() {
@@ -41,12 +44,12 @@ public class ReelScript : MonoBehaviour {
 	}
 
 	public void OnStopReel (List<string> Result) {
-//		Debug.Log (" reelSymbols " + Result[0] + "," + Result[1] + "," + Result[2]);
 		//Stop tweens in this object only.
 		iTween.Stop (gameObject);
 		float stopX = 2 * 0.091f;
 		renderer.material.mainTextureOffset = new Vector2 (stopX, 0);
-
+		audio.Stop ();
+		audio.PlayOneShot (soundReelStop);
 		
 		//Create new symbolto place.
 		GameObject tempSymbol1 = symbols [ convertSymbolString(Result[0])]as GameObject;
@@ -55,10 +58,6 @@ public class ReelScript : MonoBehaviour {
 		spawnedSymbol2 = GameObject.Instantiate(tempSymbol2, new Vector3 (transform.localPosition.x, transform.localPosition.y, -3), Quaternion.identity) as GameObject;
 		GameObject tempSymbol3 = symbols [ convertSymbolString(Result[2])] as GameObject;
 		spawnedSymbol3 = GameObject.Instantiate(tempSymbol3, new Vector3 (transform.localPosition.x + 2, transform.localPosition.y, -3), Quaternion.identity) as GameObject;
-	}
-
-	protected void clearStillSymbols() {
-
 	}
 
 	protected int convertSymbolString(string value) {

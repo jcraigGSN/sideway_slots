@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 	private spinResult mSpinResult;
 	public GameObject mSymbolHighlight;
 	private List<GameObject> mWinHighlights;
+	public AudioClip SoundWin;
 
 	//Current state of game. 1=betting, 2 = spinning.
 	private int mGameState = 1;
@@ -117,6 +118,8 @@ public class GameController : MonoBehaviour {
 		//Cycle wins.
 		if (mSpinResult.GetHighlights().Count > 0) {
 			CycleWins (mSpinResult);
+			Debug.Log("   play soundWin!!!");
+			audio.PlayOneShot (SoundWin);
 		}
 		mGameState = 1;
 	}

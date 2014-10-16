@@ -16,6 +16,7 @@ public class ButtonBetMinus : MonoBehaviour {
 
 	IEnumerator OnMouseDown ()
 	{	
+		audio.Play ();
 		iTween.Stop (gameObject);
 		yield return new WaitForSeconds(0.01f);
 		//Spin button 45 degrees CCW.

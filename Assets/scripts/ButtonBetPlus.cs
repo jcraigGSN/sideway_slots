@@ -16,6 +16,7 @@ public class ButtonBetPlus : MonoBehaviour {
 
 	IEnumerator OnMouseDown ()
 	{	
+		audio.Play ();
 		iTween.StopByName ("BetPlusAnim");
 		yield return new WaitForSeconds(0.01f);
 		spinButton ();
