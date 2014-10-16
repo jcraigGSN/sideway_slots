@@ -28,7 +28,12 @@ public class ReelScript : MonoBehaviour {
 		if (spawnedSymbol3)
 			DestroyObject (spawnedSymbol3);
 
-		iTween.ValueTo (gameObject, iTween.Hash ("from", 0.0f, "to", .818181f, "time", 1.5f, "onupdate", "OnTweenUpdate"));
+		reelLoop ();
+//		iTween.ValueTo (gameObject, iTween.Hash ("from", 0.0f, "to", 1, "time", 0.8f, "onupdate", "OnTweenUpdate", "oncomplete", "reelLoop"));
+	}
+
+	protected void reelLoop() {
+		iTween.ValueTo (gameObject, iTween.Hash ("from", 0.0f, "to", 1, "time", 0.8f, "onupdate", "OnTweenUpdate", "oncomplete", "reelLoop"));
 	}
 
 	public void OnTweenUpdate(float value) {
