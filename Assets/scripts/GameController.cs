@@ -103,11 +103,11 @@ public class GameController : MonoBehaviour
 				}
 				
 				Debug.Log ("Swipe at: " + y);
-				if (y > 425f) {
+				if (y > 610f) {
 						this.SpinReel1 (direction);
-				} else if (y > 300f) {
+				} else if (y > 407f) {
 						this.SpinReel2 (direction);
-				} else if (y > 168f) {
+				} else if (y > 240f) {
 						this.SpinReel3 (direction);
 				}
 				this.OnAllReelsSpinning ();
@@ -132,20 +132,26 @@ public class GameController : MonoBehaviour
 	
 		public void SpinReel1 (float direction)
 		{
-				Reel_1.GetComponent<ReelScript> ().OnSpin (direction);
-				this.mReelStates [sREEL_ONE] = 1;
+				if (this.mReelStates [sREEL_ONE] == 0) {
+						Reel_1.GetComponent<ReelScript> ().OnSpin (direction);
+						this.mReelStates [sREEL_ONE] = 1;
+				}
 		}
 	
 		public void SpinReel2 (float direction)
-		{
-				Reel_2.GetComponent<ReelScript> ().OnSpin (direction);
-				this.mReelStates [sREEL_TWO] = 1;
+	{
+		if (this.mReelStates [sREEL_TWO] == 0) {
+						Reel_2.GetComponent<ReelScript> ().OnSpin (direction);
+						this.mReelStates [sREEL_TWO] = 1;
+				}
 		}
 	
 		public void SpinReel3 (float direction)
 		{
-				Reel_3.GetComponent<ReelScript> ().OnSpin (direction);
-				this.mReelStates [sREEL_THREE] = 1;
+		if (this.mReelStates [sREEL_THREE] == 0) {
+						Reel_3.GetComponent<ReelScript> ().OnSpin (direction);
+						this.mReelStates [sREEL_THREE] = 1;
+				}
 		}
 	
 	

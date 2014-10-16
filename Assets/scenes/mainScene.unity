@@ -454,7 +454,7 @@ MonoBehaviour:
   BankerObject: {fileID: 193182376}
   ServerObject: {fileID: 1760338210}
   mSymbolHighlight: {fileID: 100000, guid: 6869112c14018470ba4c2d54747ee7c7, type: 2}
-  soundWin: {fileID: 8300000, guid: 4ab1d4d0b86644d1584b4fb553297106, type: 3}
+  SoundWin: {fileID: 8300000, guid: 4ab1d4d0b86644d1584b4fb553297106, type: 3}
 --- !u!4 &951962252
 Transform:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 4ab1d4d0b86644d1584b4fb553297106, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -559,7 +559,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: e2ff30d9272c54b8abfa6870d38aceec, type: 2}
+  - {fileID: 2100000, guid: 48b274a4f86564cadb3bfea57c649541, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1489,7 +1489,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: e2ff30d9272c54b8abfa6870d38aceec, type: 2}
+  - {fileID: 2100000, guid: 0c226e0b4ee4b4f13a024e67c489e75b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1714,6 +1714,10 @@ Prefab:
       propertyPath: m_Name
       value: Reel_1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: a2e7ed4fbb0ac436098151cdbc193b50, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0c226e0b4ee4b4f13a024e67c489e75b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2e7ed4fbb0ac436098151cdbc193b50, type: 2}
   m_RootGameObject: {fileID: 1601466635}
@@ -1899,6 +1903,10 @@ Prefab:
       propertyPath: m_Name
       value: Reel_2
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: a2e7ed4fbb0ac436098151cdbc193b50, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48b274a4f86564cadb3bfea57c649541, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2e7ed4fbb0ac436098151cdbc193b50, type: 2}
   m_RootGameObject: {fileID: 994493892}
