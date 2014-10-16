@@ -11,13 +11,30 @@ public class GameController : MonoBehaviour {
 	public GameObject TextField_Bet;
 	public GameObject TextField_Win;
 
-	protected int BalanceAmount = 10000;
+	public GameObject BankerObject;
+	private bankerScript banker;
+	private TextFieldScript textBalance;
+	private TextFieldScript textBet;
+	private TextFieldScript textWin;
 
+	//Spin outcome
+	public GameObject ServerObject;
+	private serverScript mServerScript;
+	private List<List<string>> mResult;
+	private spinResult mSpinResult;
+
+	void Awake () {
+		banker = BankerObject.GetComponent<bankerScript> ();
+		textBalance = TextField_Balance.GetComponent<TextFieldScript> ();
+		textBet = TextField_Bet.GetComponent<TextFieldScript> ();
+		textWin = TextField_Win.GetComponent<TextFieldScript> ();
+		mServerScript = ServerObject.GetComponent<serverScript> ();
+	}
 	// Use this for initialization
 	void Start () {
-		TextField_Balance.GetComponent<TextFieldScript>().setValue (BalanceAmount);
-		TextField_Bet.GetComponent<TextFieldScript>().setValue (5);
-		TextField_Win.GetComponent<TextFieldScript>().setValue (0);
+		textBalance.setValue (banker.GetBalance ());
+		textBet.setValue (banker.GetBetAmt());
+		textWin.setValue (0);
 	}
 	
 	// Update is called once per frame
@@ -26,8 +43,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spinButtonHit() {
-		//Deduct bet.
-		AdjustBalance (-5);
+		//Deduct bet on display.
+		int tempBal = banker.GetBalance () - banker.GetBetAmt ();
+		textBalance.setValue (tempBal);
 
 		//Tell reels to spin.
 		Reel_1.GetComponent<ReelScript> ().OnSpin ();
@@ -37,25 +55,68 @@ public class GameController : MonoBehaviour {
 		StartCoroutine (StopReel1 ());
 		StartCoroutine (StopReel2 ());
 		StartCoroutine (StopReel3 ());
+		StartCoroutine (OnReelsStopped ());
+
+		//Get outcome.
+		mSpinResult = mServerScript.Spin (banker.GetBetAmt () / 5);
+		mResult = mSpinResult.GetResult ();  //Get symbols on reels.
 	}
 
 	public IEnumerator StopReel1() {
 		yield return new WaitForSeconds(1);
-		Reel_1.GetComponent<ReelScript> ().OnStopReel(2);
+		List<string> reelResult = new List<string> ();
+		reelResult.Add (mResult [0] [0]);
+		reelResult.Add (mResult [1] [0]);
+		reelResult.Add (mResult [2] [0]);
+		Reel_1.GetComponent<ReelScript> ().OnStopReel(reelResult);
 	}
 	
 	public IEnumerator StopReel2() {
 		yield return new WaitForSeconds(1.25f);
-		Reel_2.GetComponent<ReelScript> ().OnStopReel(6);
+		List<string> reelResult = new List<string> ();
+		reelResult.Add (mResult [0] [1]);
+		reelResult.Add (mResult [1] [1]);
+		reelResult.Add (mResult [2] [1]);
+		Reel_2.GetComponent<ReelScript> ().OnStopReel(reelResult);
 	}
 	
 	public IEnumerator StopReel3() {
-		yield return new WaitForSeconds(1.5f);
-		Reel_3.GetComponent<ReelScript> ().OnStopReel(8);
+		yield return new WaitForSeconds (1.5f);
+		List<string> reelResult = new List<string> ();
+		reelResult.Add (mResult [0] [2]);
+		reelResult.Add (mResult [1] [2]);
+		reelResult.Add (mResult [2] [2]);
+		Reel_3.GetComponent<ReelScript> ().OnStopReel(reelResult);
 	}
 
-	void AdjustBalance(int value) {
-		BalanceAmount += value;
-		TextField_Balance.GetComponent<TextFieldScript>().setValue (BalanceAmount);
+	public IEnumerator OnReelsStopped() {
+		//Adjust balance in banker.
+		banker.IncBalance (banker.GetBetAmt () * -1);
+		//Get outcomes.
+		yield return new WaitForSeconds (1.5f);
+		//Highlight wins.
+
+		//Show win amount.
+		int win = mSpinResult.GetTotalAward ();
+		textWin.setValue (win);
+		//Increment balance.
+		banker.IncBalance (win);
+		textBalance.setValue (banker.GetBalance ());
+		Debug.Log ("win = " + win);
+	}
+
+	protected void setBetAmt() {
+		textBet.setValue (banker.GetBetAmt ());
+	}
+	/**
+	 * Incereases bet amount. Called from ButtonBetPlus.
+	 */
+	public void onBetIncrease() {
+		banker.IncBetAmt ();
+		setBetAmt ();
+	}
+	public void onBetDecrease() {
+		banker.DecBetAmt ();
+		setBetAmt ();
 	}
 }

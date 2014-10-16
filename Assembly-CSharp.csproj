@@ -46,12 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\ButtonBetMinus.cs" />
+     <Compile Include="Assets\scripts\ButtonBetPlus.cs" />
      <Compile Include="Assets\scripts\ButtonSpin.cs" />
      <Compile Include="Assets\scripts\GameController.cs" />
      <Compile Include="Assets\scripts\ReelScript.cs" />
      <Compile Include="Assets\scripts\TextFieldScript.cs" />
+     <Compile Include="Assets\scripts\bankerScript.cs" />
      <Compile Include="Assets\scripts\mainScript.cs" />
      <Compile Include="Assets\scripts\outcomeObj.cs" />
+     <Compile Include="Assets\scripts\payoutScript.cs" />
      <Compile Include="Assets\scripts\serverScript.cs" />
      <Compile Include="Assets\scripts\spinResult.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />

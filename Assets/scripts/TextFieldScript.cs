@@ -17,9 +17,9 @@ public class TextFieldScript : MonoBehaviour {
 
 	public void setValue(int value) {
 		if (value > 0) {
-				M_TextField.text = value.ToString ();
+			M_TextField.text = value.ToString();
 		} else {
-				M_TextField.text = "";
+			M_TextField.text = "";
 		}
 	}
 }
