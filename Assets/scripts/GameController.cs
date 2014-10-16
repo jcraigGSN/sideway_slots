@@ -150,16 +150,13 @@ public class GameController : MonoBehaviour {
 		List<List<int>> mHighlights = mOutcomeObj[0].GetHighlights ();
 
 		for(int i=0; i <3; ++i) {
-			Debug.Log(" highlight line " + i + " = " + mHighlights[i][0] + mHighlights[i][1] + mHighlights[i][2]);
 			for(int j = 0; j < 3; ++j) {
-				Debug.Log ("check " + i + "," + j);
 				if (mHighlights[i][j] == 1) {
 					//Add highlight   
 					GameObject reelTemp = GameObject.Find("Reel_" + (j+1)) as GameObject;
 					float posX = reelTemp.transform.localPosition.x - ((i-1 )*-2);
 					float posY = reelTemp.transform.localPosition.y;
-					Debug.Log ("   highlight " + i + "," + j + ", xy = " + posX + "," + posY);
-					GameObject highlightSymbol = GameObject.Instantiate(mSymbolHighlight, new Vector3 (posX, posY, -4), Quaternion.identity) as GameObject;
+					GameObject highlightSymbol = GameObject.Instantiate(mSymbolHighlight, new Vector3 (posX, posY, -10), Quaternion.identity) as GameObject;
 					mWinHighlights.Add(highlightSymbol);
 				}
 			}
