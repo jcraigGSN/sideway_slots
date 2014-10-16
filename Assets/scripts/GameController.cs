@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour {
 	public GameObject mSymbolHighlight;
 	private List<GameObject> mWinHighlights;
 
+	//Current state of game. 1=betting, 2 = spinning.
+	private int mGameState = 1;
+
 	void Awake () {
 		banker = BankerObject.GetComponent<bankerScript> ();
 		textBalance = TextField_Balance.GetComponent<TextFieldScript> ();
@@ -46,26 +49,29 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void spinButtonHit() {
-		clearHighlights ();
-		//Deduct bet on display.
-		int tempBal = banker.GetBalance () - banker.GetBetAmt ();
-		textBalance.setValue (tempBal);
-		//Clear win amount
-		textWin.setValue (0);
+		if (mGameState == 1) {
+			mGameState = 2;
+			clearHighlights ();
+			//Deduct bet on display.
+			int tempBal = banker.GetBalance () - banker.GetBetAmt ();
+			textBalance.setValue (tempBal);
+			//Clear win amount
+			textWin.setValue (0);
 
-		//Tell reels to spin.
-		Reel_1.GetComponent<ReelScript> ().OnSpin ();
-		Reel_2.GetComponent<ReelScript> ().OnSpin ();
-		Reel_3.GetComponent<ReelScript> ().OnSpin ();
-		//Stop each reel, with a delay.
-		StartCoroutine (StopReel1 ());
-		StartCoroutine (StopReel2 ());
-		StartCoroutine (StopReel3 ());
-		StartCoroutine (OnReelsStopped ());
+			//Tell reels to spin.
+			Reel_1.GetComponent<ReelScript> ().OnSpin ();
+			Reel_2.GetComponent<ReelScript> ().OnSpin ();
+			Reel_3.GetComponent<ReelScript> ().OnSpin ();
+			//Stop each reel, with a delay.
+			StartCoroutine (StopReel1 ());
+			StartCoroutine (StopReel2 ());
+			StartCoroutine (StopReel3 ());
+			StartCoroutine (OnReelsStopped ());
 
-		//Get outcome.
-		mSpinResult = mServerScript.Spin (banker.GetBetAmt ());
-		mResult = mSpinResult.GetResult ();  //Get symbols on reels.
+			//Get outcome.
+			mSpinResult = mServerScript.Spin (banker.GetBetAmt ());
+			mResult = mSpinResult.GetResult ();  //Get symbols on reels.
+		}
 	}
 
 	public IEnumerator StopReel1() {
@@ -112,6 +118,7 @@ public class GameController : MonoBehaviour {
 		if (mSpinResult.GetHighlights().Count > 0) {
 			CycleWins (mSpinResult);
 		}
+		mGameState = 1;
 	}
 
 	protected void setBetAmt() {
@@ -123,12 +130,18 @@ public class GameController : MonoBehaviour {
 	 * Incereases bet amount. Called from ButtonBetPlus.
 	 */
 	public void onBetIncrease() {
-		banker.IncBetAmt ();
-		setBetAmt ();
+		if (mGameState == 1) {
+			banker.IncBetAmt ();
+			setBetAmt ();
+			clearHighlights ();
+		}
 	}
 	public void onBetDecrease() {
-		banker.DecBetAmt ();
-		setBetAmt ();
+		if (mGameState == 1) {
+			banker.DecBetAmt ();
+			setBetAmt ();
+			clearHighlights ();
+		}
 	}
 
 	protected void CycleWins(spinResult inSpinResult) {
